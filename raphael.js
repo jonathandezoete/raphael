@@ -5547,16 +5547,20 @@
                 }
             }
         }
-        var thefont;
+        var thefont, backupfont;
         if (font) {
             for (var i = 0, ii = font.length; i < ii; i++) {
-                thefont = font[i];
-                if (thefont.face["font-weight"] == weight && (thefont.face["font-style"] == style || !thefont.face["font-style"]) && thefont.face["font-stretch"] == stretch) {
-                    break;
+                thefont = font[i];                                
+                if (thefont.face["font-weight"] == weight && thefont.face["font-stretch"] == stretch) {
+                    if(thefont.face["font-style"] == style) {                                    
+                        break;   
+                    } else if(!thefont.face["font-style"]) {
+                        backupfont = thefont;
+                    }                      
                 }
             }
         }
-        return thefont;
+        return thefont ? thefont : backupfont;
     };
     /*\
      * Paper.print
